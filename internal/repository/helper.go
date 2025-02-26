@@ -2,7 +2,13 @@ package repository
 
 import (
 	"encoding/base64"
+	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"gopkg.in/DATA-DOG/go-sqlmock.v1"
+	gormmysql "gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 const (
@@ -27,4 +33,18 @@ func EncodeCursor(t time.Time) string {
 	timeString := t.Format(timeFormat)
 
 	return base64.StdEncoding.EncodeToString([]byte(timeString))
+}
+
+// SetupTestDB will setup a test database and return a gorm.DB and sqlmock.Sqlmock
+func SetupTestDB(t *testing.T) (*gorm.DB, sqlmock.Sqlmock) {
+	db, mock, err := sqlmock.New()
+	assert.NoError(t, err)
+
+	gormDB, err := gorm.Open(gormmysql.New(gormmysql.Config{
+		Conn:                      db,
+		SkipInitializeWithVersion: true,
+	}), &gorm.Config{})
+	assert.NoError(t, err)
+
+	return gormDB, mock
 }

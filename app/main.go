@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"net/url"
@@ -10,14 +9,17 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/labstack/echo/v4"
-
-	mysqlRepo "github.com/bxcodec/go-clean-arch/internal/repository/mysql"
-
-	"github.com/bxcodec/go-clean-arch/article"
-	"github.com/bxcodec/go-clean-arch/internal/rest"
-	"github.com/bxcodec/go-clean-arch/internal/rest/middleware"
 	"github.com/joho/godotenv"
+	"github.com/labstack/echo/v4"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+
+	"github.com/tingyoulin/go-ticket-booking/booking"
+	"github.com/tingyoulin/go-ticket-booking/flight"
+	mysqlRepo "github.com/tingyoulin/go-ticket-booking/internal/repository/mysql"
+	"github.com/tingyoulin/go-ticket-booking/internal/rest/api"
+	"github.com/tingyoulin/go-ticket-booking/internal/rest/middleware"
 )
 
 const (
@@ -44,23 +46,15 @@ func main() {
 	val.Add("parseTime", "1")
 	val.Add("loc", "Asia/Jakarta")
 	dsn := fmt.Sprintf("%s?%s", connection, val.Encode())
-	dbConn, err := sql.Open(`mysql`, dsn)
+
+	gormDB, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		log.Fatal("failed to open connection to database", err)
 	}
-	err = dbConn.Ping()
-	if err != nil {
-		log.Fatal("failed to ping database ", err)
-	}
 
-	defer func() {
-		err := dbConn.Close()
-		if err != nil {
-			log.Fatal("got error when closing the DB connection", err)
-		}
-	}()
 	// prepare echo
-
 	e := echo.New()
 	e.Use(middleware.CORS)
 	timeoutStr := os.Getenv("CONTEXT_TIMEOUT")
@@ -73,12 +67,15 @@ func main() {
 	e.Use(middleware.SetRequestContextWithTimeout(timeoutContext))
 
 	// Prepare Repository
-	authorRepo := mysqlRepo.NewAuthorRepository(dbConn)
-	articleRepo := mysqlRepo.NewArticleRepository(dbConn)
+	bookingRepo := mysqlRepo.NewBookingRepository(gormDB)
+	flightRepo := mysqlRepo.NewFlightRepository(gormDB)
 
 	// Build service Layer
-	svc := article.NewService(articleRepo, authorRepo)
-	rest.NewArticleHandler(e, svc)
+	bookingSvc := booking.NewService(bookingRepo, flightRepo)
+	flightSvc := flight.NewService(flightRepo)
+
+	api.NewBookingHandler(e, bookingSvc)
+	api.NewFlightHandler(e, flightSvc)
 
 	// Start Server
 	address := os.Getenv("SERVER_ADDRESS")
