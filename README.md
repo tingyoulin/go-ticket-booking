@@ -23,7 +23,7 @@
 
 ### How To Run This Project
 
-> Make Sure you have run the article.sql in your mysql
+> Make Sure you have run the flight.sql in your mysql
 
 Since the project is already use Go Module, I recommend to put the source code in any folder but GOPATH.
 

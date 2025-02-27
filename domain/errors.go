@@ -11,4 +11,8 @@ var (
 	ErrConflict = errors.New("your Item already exist")
 	// ErrBadParamInput will throw if the given request-body or params is not valid
 	ErrBadParamInput = errors.New("given Param is not valid")
+	// ErrUnauthorized will throw if the user is not authorized
+	ErrUnauthorized = errors.New("unauthorized (invalid token or password)")
+	// ErrForbidden will throw if the user is forbidden to access the resource
+	ErrForbidden = errors.New("forbidden (do not have permission)")
 )

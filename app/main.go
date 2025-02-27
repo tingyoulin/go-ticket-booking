@@ -11,6 +11,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -18,8 +19,10 @@ import (
 	"github.com/tingyoulin/go-ticket-booking/booking"
 	"github.com/tingyoulin/go-ticket-booking/flight"
 	mysqlRepo "github.com/tingyoulin/go-ticket-booking/internal/repository/mysql"
+	redisRepo "github.com/tingyoulin/go-ticket-booking/internal/repository/redis"
 	"github.com/tingyoulin/go-ticket-booking/internal/rest/api"
 	"github.com/tingyoulin/go-ticket-booking/internal/rest/middleware"
+	"github.com/tingyoulin/go-ticket-booking/passenger"
 )
 
 const (
@@ -54,6 +57,12 @@ func main() {
 		log.Fatal("failed to open connection to database", err)
 	}
 
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:     os.Getenv("REDIS_HOST") + ":" + os.Getenv("REDIS_PORT"),
+		Password: os.Getenv("REDIS_PASSWORD"),
+		DB:       0,
+	})
+
 	// prepare echo
 	e := echo.New()
 	e.Use(middleware.CORS)
@@ -69,13 +78,20 @@ func main() {
 	// Prepare Repository
 	bookingRepo := mysqlRepo.NewBookingRepository(gormDB)
 	flightRepo := mysqlRepo.NewFlightRepository(gormDB)
+	passengerRepo := mysqlRepo.NewPassengerRepository(gormDB)
+	tokenRedisRepo := redisRepo.NewTokenRedisRepository(redisClient)
+
+	// Auth Middleware
+	authMiddleware := middleware.Auth(tokenRedisRepo)
 
 	// Build service Layer
 	bookingSvc := booking.NewService(bookingRepo, flightRepo)
 	flightSvc := flight.NewService(flightRepo)
+	passengerSvc := passenger.NewService(passengerRepo, tokenRedisRepo)
 
-	api.NewBookingHandler(e, bookingSvc)
-	api.NewFlightHandler(e, flightSvc)
+	api.NewBookingHandler(e, bookingSvc, authMiddleware)
+	api.NewFlightHandler(e, flightSvc, authMiddleware)
+	api.NewPassengerHandler(e, passengerSvc, authMiddleware)
 
 	// Start Server
 	address := os.Getenv("SERVER_ADDRESS")

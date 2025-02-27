@@ -22,14 +22,14 @@ type BookingHandler struct {
 	Service BookingService
 }
 
-func NewBookingHandler(e *echo.Echo, svc BookingService) {
+func NewBookingHandler(e *echo.Echo, svc BookingService, authMiddleware echo.MiddlewareFunc) {
 	handler := &BookingHandler{
 		Service: svc,
 	}
-	e.POST("/api/bookings", handler.Create)
-	e.GET("/api/bookings/:id", handler.GetByID)
-	e.GET("/api/bookings/list", handler.GetByPassengerID)
-	e.PATCH("/api/bookings", handler.Updates)
+	e.POST("/api/bookings", handler.Create, authMiddleware)
+	e.GET("/api/bookings/:id", handler.GetByID, authMiddleware)
+	e.GET("/api/bookings/list", handler.GetByPassengerID, authMiddleware)
+	e.PATCH("/api/bookings", handler.Updates, authMiddleware)
 }
 
 // POST /api/bookings

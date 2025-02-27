@@ -21,11 +21,11 @@ type FlightHandler struct {
 	Service FlightService
 }
 
-func NewFlightHandler(e *echo.Echo, svc FlightService) {
+func NewFlightHandler(e *echo.Echo, svc FlightService, authMiddleware echo.MiddlewareFunc) {
 	handler := &FlightHandler{
 		Service: svc,
 	}
-	e.GET("/api/flights", handler.Fetch)
+	e.GET("/api/flights", handler.Fetch, authMiddleware)
 }
 
 // GET /api/flights
