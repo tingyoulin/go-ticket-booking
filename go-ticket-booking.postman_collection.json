@@ -1,0 +1,1263 @@
+{
+	"info": {
+		"_postman_id": "e1fb9aff-31e9-4189-8ff4-4a4a245b22b4",
+		"name": "go-ticket-booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16879245"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "passengers",
+					"item": [
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"r850524@gmail.com\",\n    \"password\": \"password\",\n    \"name\": \"Ryan Lin\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9090/api/passengers/register",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"passengers",
+										"register"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"r850524@gmail.com\",\n    \"password\": \"passwor\",\n    \"name\": \"Ryan Lin\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:9090/api/passengers/register",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"register"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 13:42:09 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "145"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 3,\n    \"name\": \"Ryan Lin\",\n    \"email\": \"r850524@gmail.com\",\n    \"created_at\": \"2025-03-04T21:42:09.746+08:00\",\n    \"updated_at\": \"2025-03-04T21:42:09.746+08:00\"\n}"
+								},
+								{
+									"name": "400 (invalid params)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:9090/api/passengers/register",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"register"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 13:43:28 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "326"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Key: 'PassengerRegisterRequest.Name' Error:Field validation for 'Name' failed on the 'required' tag\\nKey: 'PassengerRegisterRequest.Email' Error:Field validation for 'Email' failed on the 'required' tag\\nKey: 'PassengerRegisterRequest.Password' Error:Field validation for 'Password' failed on the 'required' tag\"\n}"
+								},
+								{
+									"name": "409 (passenger exists)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"r850524@gmail.com\",\n    \"password\": \"password\",\n    \"name\": \"Ryan Lin\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:9090/api/passengers/register",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"register"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 13:46:39 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "38"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"your Item already exist\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Login (get access token)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"r850524@gmail.com\",\n    \"password\": \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9090/api/passengers/login",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"passengers",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "400 (invalid params)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:9090/api/passengers/login",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"login"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 13:48:49 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "219"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Key: 'PassengerLoginRequest.Email' Error:Field validation for 'Email' failed on the 'required' tag\\nKey: 'PassengerLoginRequest.Password' Error:Field validation for 'Password' failed on the 'required' tag\"\n}"
+								},
+								{
+									"name": "404 (email not found)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"wrong@gmail.com\",\n    \"password\": \"password\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:9090/api/passengers/login",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"login"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 13:54:32 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "47"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"your requested Item is not found\"\n}"
+								},
+								{
+									"name": "401 (wrong password)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"r850524@gmail.com\",\n    \"password\": \"worong password\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:9090/api/passengers/login",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"login"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 13:58:20 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "55"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"unauthorized (invalid token or password)\"\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"r850524@gmail.com\",\n    \"password\": \"password\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:9090/api/passengers/login",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 13:58:46 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "185"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTgzMTI2LCJwYXNzZW5nZXJfaWQiOjN9.2P_Cg1ufceiAJTP3p8V09YVTQ7lozvzdy2RvGSvOcu8\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Logout (revoke token)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTgzNTMzLCJwYXNzZW5nZXJfaWQiOjN9.lwNZqbx9st8gPhH7XfvKizCJH6tC03eDjIDppvruTxM",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9090/api/passengers/logout",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"passengers",
+										"logout"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "401 (invalid token)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTgzNTMzLCJwYXNzZW5nZXJfaWQiOjN9.lwNZqbx9st8gPhH7XfvKizCJH6tC03eDjIDppvruTxM",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:9090/api/passengers/logout",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"logout"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 14:22:16 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "55"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"unauthorized (invalid token or password)\"\n}"
+								},
+								{
+									"name": "401 (Authorization header is required)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTgzNTMzLCJwYXNzZW5nZXJfaWQiOjN9.lwNZqbx9st8gPhH7XfvKizCJH6tC03eDjIDppvruTxM",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "localhost:9090/api/passengers/logout",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"logout"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 14:24:09 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "47"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Authorization header is required\"\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTg0Njc1LCJwYXNzZW5nZXJfaWQiOjN9.kb3t4Y5mmb2GZsxEbZS6rYtTGnXMmvne1vK8rfmhW1M",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:9090/api/passengers/logout",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"passengers",
+												"logout"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 14:24:48 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "17"
+										}
+									],
+									"cookie": [],
+									"body": "\"logout success\""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "flights",
+					"item": [
+						{
+							"name": "Fetch flights",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:9090/api/flights?departure_time=2022-01-01T08:00:00Z&seats=1&destination=Los Angeles&departure=New York&page=1&per_page=10",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"flights"
+									],
+									"query": [
+										{
+											"key": "departure_time",
+											"value": "2022-01-01T08:00:00Z"
+										},
+										{
+											"key": "seats",
+											"value": "1"
+										},
+										{
+											"key": "destination",
+											"value": "Los Angeles"
+										},
+										{
+											"key": "departure",
+											"value": "New York"
+										},
+										{
+											"key": "page",
+											"value": "1",
+											"description": "default is 1"
+										},
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": "default is 10"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:9090/api/flights?departure_time=2022-01-01T08:00:00Z&seats=1&destination=Los Angeles&departure=New York&page=1&per_page=10",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"flights"
+											],
+											"query": [
+												{
+													"key": "departure_time",
+													"value": "2022-01-01T08:00:00Z"
+												},
+												{
+													"key": "seats",
+													"value": "1"
+												},
+												{
+													"key": "destination",
+													"value": "Los Angeles"
+												},
+												{
+													"key": "departure",
+													"value": "New York"
+												},
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "per_page",
+													"value": "10"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 16:02:08 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1401"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": 1,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-01T08:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 10,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-01T08:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 11,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-02T09:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 12,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-03T10:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 13,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-04T11:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 14,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-05T12:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 15,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-06T13:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 16,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-07T14:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 17,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-08T15:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 18,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-09T16:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    }\n]"
+								},
+								{
+									"name": "Fetch flights",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:9090/api/flights?departure_time=2022-01-01T08:00:00Z&destination=Los Angeles&page=2",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"flights"
+											],
+											"query": [
+												{
+													"key": "departure_time",
+													"value": "2022-01-01T08:00:00Z"
+												},
+												{
+													"key": "destination",
+													"value": "Los Angeles"
+												},
+												{
+													"key": "page",
+													"value": "2",
+													"description": "default is 1"
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "default is 10",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 16:03:50 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1402"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": 19,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-10T17:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 20,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-11T18:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 21,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-12T19:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 22,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-13T20:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 23,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-14T21:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 24,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-15T22:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 25,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-16T23:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 26,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-17T07:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 27,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-18T08:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    },\n    {\n        \"id\": 28,\n        \"departure\": \"New York\",\n        \"destination\": \"Los Angeles\",\n        \"departure_time\": \"2023-12-19T09:00:00+07:00\",\n        \"price\": 299.99,\n        \"status\": \"on_time\"\n    }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "bookings",
+					"item": [
+						{
+							"name": "Book a flight",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTkwNzY4LCJwYXNzZW5nZXJfaWQiOjN9.OlQJhqg23Q46XV8r9IrzOOjA-Tix5oQWDhLO4RgoWyY",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"flight_id\": 4,\n    \"seats\": 5\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9090/api/bookings",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"bookings"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "403 (Unauthorized)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "localhost:9090/api/bookings",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"bookings"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 16:06:55 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "47"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Authorization header is required\"\n}"
+								},
+								{
+									"name": "400 (invalid params)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTkwNzY4LCJwYXNzZW5nZXJfaWQiOjN9.OlQJhqg23Q46XV8r9IrzOOjA-Tix5oQWDhLO4RgoWyY",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"flight_id\": 1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:9090/api/bookings",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"bookings"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 16:11:26 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "112"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Key: 'BookingCreateRequest.Seats' Error:Field validation for 'Seats' failed on the 'required' tag\"\n}"
+								},
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTkwNzY4LCJwYXNzZW5nZXJfaWQiOjN9.OlQJhqg23Q46XV8r9IrzOOjA-Tix5oQWDhLO4RgoWyY",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"flight_id\": 4,\n    \"seats\": 5\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:9090/api/bookings",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"bookings"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 16:50:09 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "398"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 5,\n    \"flight\": {\n        \"id\": 4,\n        \"departure\": \"Dallas\",\n        \"destination\": \"Houston\",\n        \"departure_time\": \"2023-12-04T11:15:00+07:00\",\n        \"status\": \"on_time\"\n    },\n    \"passenger\": {\n        \"id\": 3,\n        \"name\": \"Ryan Lin\",\n        \"email\": \"r850524@gmail.com\",\n        \"created_at\": \"2025-03-04T23:06:05+07:00\",\n        \"updated_at\": \"2025-03-04T23:06:05+07:00\"\n    },\n    \"seats\": 5,\n    \"status\": \"confirmed\",\n    \"created_at\": \"2025-03-04T23:50:10+07:00\",\n    \"updated_at\": \"2025-03-04T23:50:10+07:00\"\n}"
+								},
+								{
+									"name": "400 (no available seats)",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTkwNzY4LCJwYXNzZW5nZXJfaWQiOjN9.OlQJhqg23Q46XV8r9IrzOOjA-Tix5oQWDhLO4RgoWyY",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"flight_id\": 4,\n    \"seats\": 5000\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:9090/api/bookings",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"bookings"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 16:55:33 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "44"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"flight has no available seats\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get booking list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTkwNzY4LCJwYXNzZW5nZXJfaWQiOjN9.OlQJhqg23Q46XV8r9IrzOOjA-Tix5oQWDhLO4RgoWyY",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9090/api/bookings/list?page=1&per_page=10",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"bookings",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "default is 1"
+										},
+										{
+											"key": "per_page",
+											"value": "10",
+											"description": "default is 10"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTkwNzY4LCJwYXNzZW5nZXJfaWQiOjN9.OlQJhqg23Q46XV8r9IrzOOjA-Tix5oQWDhLO4RgoWyY",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:9090/api/bookings/list?page=1&per_page=10",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"bookings",
+												"list"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "1",
+													"description": "default is 1"
+												},
+												{
+													"key": "per_page",
+													"value": "10",
+													"description": "default is 10"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 17:00:29 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1104"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": 1,\n        \"flight\": {\n            \"id\": 1,\n            \"departure\": \"New York\",\n            \"destination\": \"Los Angeles\",\n            \"departure_time\": \"2023-12-01T08:00:00+07:00\",\n            \"status\": \"on_time\"\n        },\n        \"created_at\": \"2025-03-04T23:23:27+07:00\",\n        \"updated_at\": \"2025-03-04T23:23:27+07:00\"\n    },\n    {\n        \"id\": 2,\n        \"flight\": {\n            \"id\": 2,\n            \"departure\": \"Chicago\",\n            \"destination\": \"Miami\",\n            \"departure_time\": \"2023-12-02T09:30:00+07:00\",\n            \"status\": \"on_time\"\n        },\n        \"created_at\": \"2025-03-04T23:40:18+07:00\",\n        \"updated_at\": \"2025-03-04T23:40:18+07:00\"\n    },\n    {\n        \"id\": 3,\n        \"flight\": {\n            \"id\": 3,\n            \"departure\": \"San Francisco\",\n            \"destination\": \"Seattle\",\n            \"departure_time\": \"2023-12-03T07:45:00+07:00\",\n            \"status\": \"delayed\"\n        },\n        \"created_at\": \"2025-03-04T23:44:18+07:00\",\n        \"updated_at\": \"2025-03-04T23:44:18+07:00\"\n    },\n    {\n        \"id\": 4,\n        \"flight\": {\n            \"id\": 4,\n            \"departure\": \"Dallas\",\n            \"destination\": \"Houston\",\n            \"departure_time\": \"2023-12-04T11:15:00+07:00\",\n            \"status\": \"on_time\"\n        },\n        \"created_at\": \"2025-03-04T23:47:16+07:00\",\n        \"updated_at\": \"2025-03-04T23:47:16+07:00\"\n    },\n    {\n        \"id\": 5,\n        \"flight\": {\n            \"id\": 4,\n            \"departure\": \"Dallas\",\n            \"destination\": \"Houston\",\n            \"departure_time\": \"2023-12-04T11:15:00+07:00\",\n            \"status\": \"on_time\"\n        },\n        \"created_at\": \"2025-03-04T23:50:10+07:00\",\n        \"updated_at\": \"2025-03-04T23:50:10+07:00\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get the booking details",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTkwNzY4LCJwYXNzZW5nZXJfaWQiOjN9.OlQJhqg23Q46XV8r9IrzOOjA-Tix5oQWDhLO4RgoWyY",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9090/api/bookings/4",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"bookings",
+										"4"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "200",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTkwNzY4LCJwYXNzZW5nZXJfaWQiOjN9.OlQJhqg23Q46XV8r9IrzOOjA-Tix5oQWDhLO4RgoWyY",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:9090/api/bookings/4",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"bookings",
+												"4"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 17:18:20 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "398"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": 4,\n    \"flight\": {\n        \"id\": 4,\n        \"departure\": \"Dallas\",\n        \"destination\": \"Houston\",\n        \"departure_time\": \"2023-12-04T11:15:00+07:00\",\n        \"status\": \"on_time\"\n    },\n    \"passenger\": {\n        \"id\": 3,\n        \"name\": \"Ryan Lin\",\n        \"email\": \"r850524@gmail.com\",\n        \"created_at\": \"2025-03-04T23:06:05+07:00\",\n        \"updated_at\": \"2025-03-04T23:06:05+07:00\"\n    },\n    \"seats\": 5,\n    \"status\": \"confirmed\",\n    \"created_at\": \"2025-03-04T23:47:16+07:00\",\n    \"updated_at\": \"2025-03-04T23:47:16+07:00\"\n}"
+								},
+								{
+									"name": "404 (booking not found)",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InI4NTA1MjRAZ21haWwuY29tIiwiZXhwIjoxNzQxMTkwNzY4LCJwYXNzZW5nZXJfaWQiOjN9.OlQJhqg23Q46XV8r9IrzOOjA-Tix5oQWDhLO4RgoWyY",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:9090/api/bookings/1000",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"bookings",
+												"1000"
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 04 Mar 2025 17:19:45 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "47"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"your requested Item is not found\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Update the booking details",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:9090/api/bookings",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"bookings"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
