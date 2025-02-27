@@ -35,12 +35,11 @@ func Auth(tokenRedisRepo *redis.TokenRedisRepository) echo.MiddlewareFunc {
 
 			// get claims
 			claims, ok := token.Claims.(jwt.MapClaims)
-			if !ok || !token.Valid {
+			passengerID, claimsOk := claims["passenger_id"].(float64)
+			if !ok || !token.Valid || !claimsOk {
 				return c.JSON(http.StatusUnauthorized, utils.ResponseError{Message: domain.ErrUnauthorized.Error()})
 			}
-
-			// set passenger id to context
-			c.Set("passenger_id", claims["passenger_id"])
+			c.Set("passenger_id", int64(passengerID))
 
 			return next(c)
 		}

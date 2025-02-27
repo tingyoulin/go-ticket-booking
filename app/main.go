@@ -90,7 +90,7 @@ func main() {
 	passengerSvc := passenger.NewService(passengerRepo, tokenRedisRepo)
 
 	api.NewBookingHandler(e, bookingSvc, authMiddleware)
-	api.NewFlightHandler(e, flightSvc, authMiddleware)
+	api.NewFlightHandler(e, flightSvc)
 	api.NewPassengerHandler(e, passengerSvc, authMiddleware)
 
 	// Start Server

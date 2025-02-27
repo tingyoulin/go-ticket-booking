@@ -54,6 +54,8 @@ func GetStatusCode(err error) int {
 		return http.StatusUnauthorized
 	case domain.ErrForbidden:
 		return http.StatusForbidden
+	case domain.ErrFlightCanceled, domain.ErrFlightNoAvailableSeats:
+		return http.StatusBadRequest
 	default:
 		return http.StatusInternalServerError
 	}

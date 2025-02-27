@@ -106,7 +106,7 @@ func TestGetByID(t *testing.T) {
 	assert.Equal(t, mockBooking.FlightID, booking.FlightID)
 }
 
-func TestGetByPassengerID(t *testing.T) {
+func TestGetListByPassengerID(t *testing.T) {
 	gormDB, mock := repository.SetupTestDB(t)
 	repo := mysql.NewBookingRepository(gormDB)
 	mockBookings := []domain.Booking{
@@ -120,7 +120,7 @@ func TestGetByPassengerID(t *testing.T) {
 			AddRow(mockBookings[0].ID, mockBookings[0].PassengerID, mockBookings[0].FlightID).
 			AddRow(mockBookings[1].ID, mockBookings[1].PassengerID, mockBookings[1].FlightID))
 
-	bookings, err := repo.GetByPassengerID(context.Background(), 123, 1, 2)
+	bookings, err := repo.GetListByPassengerID(context.Background(), 123, 1, 2)
 	assert.NoError(t, err)
 	assert.Len(t, bookings, 2)
 	assert.Equal(t, mockBookings[0].ID, bookings[0].ID)

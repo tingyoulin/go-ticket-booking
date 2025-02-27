@@ -15,4 +15,8 @@ var (
 	ErrUnauthorized = errors.New("unauthorized (invalid token or password)")
 	// ErrForbidden will throw if the user is forbidden to access the resource
 	ErrForbidden = errors.New("forbidden (do not have permission)")
+	// ErrFlightCanceled will throw if the flight is canceled
+	ErrFlightCanceled = errors.New("flight is canceled")
+	// ErrFlightNoAvailableSeats will throw if the flight has no available seats
+	ErrFlightNoAvailableSeats = errors.New("flight has no available seats")
 )

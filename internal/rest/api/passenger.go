@@ -83,12 +83,6 @@ func (h *PassengerHandler) Login(c echo.Context) error {
 
 // POST /api/passengers/logout
 func (h *PassengerHandler) Logout(c echo.Context) error {
-	// get passenger id from context
-	passengerID := c.Get("passenger_id")
-	if passengerID == nil {
-		return c.JSON(http.StatusUnauthorized, "Unauthorized")
-	}
-
 	// logout
 	if err := h.Service.Logout(c.Request().Context(), c.Request().Header.Get("Authorization")); err != nil {
 		return c.JSON(utils.GetStatusCode(err), utils.ResponseError{Message: err.Error()})

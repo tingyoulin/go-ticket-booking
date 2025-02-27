@@ -38,19 +38,33 @@ func (r *BookingRepository) Create(ctx context.Context, booking *domain.Booking)
 	return booking, tx.Commit().Error
 }
 
-func (r *BookingRepository) GetByID(ctx context.Context, id int64) (*domain.Booking, error) {
+func (r *BookingRepository) GetByID(ctx context.Context, bookingID int64) (*domain.Booking, error) {
 	var booking domain.Booking
 	if err := r.DB.WithContext(ctx).
 		Joins("Passenger").
 		Joins("Flight").
-		First(&booking, id).Error; err != nil {
+		First(&booking, bookingID).Error; err != nil {
 		return nil, err
 	}
 	return &booking, nil
 }
 
-func (r *BookingRepository) GetByPassengerID(ctx context.Context, passengerID int64, page, perPage int) ([]domain.BookingListResponse, error) {
-	var bookings []domain.BookingListResponse
+func (r *BookingRepository) GetByIDAndPassengerID(ctx context.Context, bookingID, passengerID int64) (*domain.Booking, error) {
+	var booking domain.Booking
+	if err := r.DB.WithContext(ctx).
+		Joins("Passenger").
+		Joins("Flight").
+		Where(&domain.Booking{ID: bookingID, PassengerID: passengerID}).
+		First(&booking).Error; err == gorm.ErrRecordNotFound {
+		return nil, domain.ErrNotFound
+	} else if err != nil {
+		return nil, err
+	}
+	return &booking, nil
+}
+
+func (r *BookingRepository) GetListByPassengerID(ctx context.Context, passengerID int64, page, perPage int) ([]domain.Booking, error) {
+	var bookings []domain.Booking
 	if err := r.DB.WithContext(ctx).
 		Model(&domain.Booking{}).
 		Joins("Flight").

@@ -19,13 +19,16 @@ func NewFlightRepository(db *gorm.DB) *FlightRepository {
 
 func (r *FlightRepository) Fetch(ctx context.Context, departure, destination string, departureTime time.Time, seatsToBook, page, perPage int) ([]domain.Flight, error) {
 	var flights []domain.Flight
-	err := r.DB.WithContext(ctx).
-		Table("flights").
-		Where("departure = ? AND destination = ? AND departure_time >= ? AND available_seats >= ?",
-			departure, destination, departureTime, seatsToBook).
-		Offset((page - 1) * perPage).
-		Limit(perPage).
-		Find(&flights).Error
+	query := r.DB.WithContext(ctx).Table("flights").Where("departure_time >= ? AND available_seats >= ?", departureTime, seatsToBook)
+
+	if departure != "" {
+		query = query.Where("departure = ?", departure)
+	}
+	if destination != "" {
+		query = query.Where("destination = ?", destination)
+	}
+
+	err := query.Offset((page - 1) * perPage).Limit(perPage).Find(&flights).Error
 	if err != nil {
 		return nil, err
 	}

@@ -10,7 +10,8 @@ import (
 type BookingRepository interface {
 	Create(ctx context.Context, booking *domain.Booking) (*domain.Booking, error)
 	GetByID(ctx context.Context, id int64) (*domain.Booking, error)
-	GetByPassengerID(ctx context.Context, passengerID int64, page, perPage int) ([]domain.BookingListResponse, error)
+	GetByIDAndPassengerID(ctx context.Context, id int64, passengerID int64) (*domain.Booking, error)
+	GetListByPassengerID(ctx context.Context, passengerID int64, page, perPage int) ([]domain.Booking, error)
 	UpdateStatus(ctx context.Context, booking *domain.Booking) (*domain.Booking, error)
 	UpdateSeats(ctx context.Context, booking *domain.Booking, seatsChange int32) (*domain.Booking, error)
 }
@@ -31,7 +32,7 @@ func NewService(b BookingRepository, f FlightRepository) *Service {
 	}
 }
 
-func (s *Service) Create(ctx context.Context, booking *domain.BookingCreateRequest) (*domain.Booking, error) {
+func (s *Service) Create(ctx context.Context, booking *domain.Booking) (*domain.Booking, error) {
 	// check if flight has available seats
 	flight, err := s.flightRepo.GetByID(ctx, booking.FlightID)
 	if err != nil {
@@ -40,51 +41,54 @@ func (s *Service) Create(ctx context.Context, booking *domain.BookingCreateReque
 
 	// check if flight is canceled
 	if flight.Status == domain.FlightStatusCanceled {
-		return nil, fmt.Errorf("flight %d is canceled", booking.FlightID)
+		return nil, domain.ErrFlightCanceled
 	}
 
 	if flight.AvailableSeats < booking.Seats {
-		return nil, fmt.Errorf("flight %d has only %d available seats", booking.FlightID, flight.AvailableSeats)
+		return nil, domain.ErrFlightNoAvailableSeats
 	}
 
 	// create booking
-	return s.bookingRepo.Create(ctx, &domain.Booking{
-		PassengerID: booking.PassengerID,
-		FlightID:    booking.FlightID,
-		Flight:      *flight,
-		Seats:       booking.Seats,
-		Status:      domain.BookingStatusConfirmed,
-	})
+	booking, err = s.bookingRepo.Create(ctx, booking)
+	if err != nil {
+		return nil, err
+	}
+
+	return s.GetByID(ctx, booking.ID)
 }
 
 func (s *Service) GetByID(ctx context.Context, id int64) (*domain.Booking, error) {
 	return s.bookingRepo.GetByID(ctx, id)
 }
 
-func (s *Service) GetByPassengerID(ctx context.Context, passengerID int64, page, perPage int) ([]domain.BookingListResponse, error) {
-	return s.bookingRepo.GetByPassengerID(ctx, passengerID, page, perPage)
+func (s *Service) GetByIDAndPassengerID(ctx context.Context, bookingID int64, passengerID int64) (*domain.Booking, error) {
+	return s.bookingRepo.GetByIDAndPassengerID(ctx, bookingID, passengerID)
 }
 
-func (s *Service) Updates(ctx context.Context, bookingReq *domain.BookingPatchRequest) (*domain.Booking, error) {
-	booking, err := s.bookingRepo.GetByID(ctx, bookingReq.BookingID)
+func (s *Service) GetListByPassengerID(ctx context.Context, passengerID int64, page, perPage int) ([]domain.Booking, error) {
+	return s.bookingRepo.GetListByPassengerID(ctx, passengerID, page, perPage)
+}
+
+func (s *Service) Updates(ctx context.Context, booking *domain.Booking) (*domain.Booking, error) {
+	bookingToUpdate, err := s.bookingRepo.GetByID(ctx, booking.ID)
 	if err != nil {
 		return nil, err
 	}
 
-	if bookingReq.FlightID != 0 {
+	if booking.FlightID != 0 {
 		return nil, fmt.Errorf("flight id is not allowed to be updated")
 	}
 
-	if bookingReq.Status == domain.BookingStatusCanceled {
-		booking.Status = bookingReq.Status
+	if booking.Status == domain.BookingStatusCanceled {
+		bookingToUpdate.Status = booking.Status
 		return s.bookingRepo.UpdateStatus(ctx, booking)
 	}
 
-	if bookingReq.Seats != 0 {
-		seatsChange := bookingReq.Seats - booking.Seats
-		booking.Seats = bookingReq.Seats
-		return s.bookingRepo.UpdateSeats(ctx, booking, seatsChange)
+	if booking.Seats != 0 {
+		seatsChange := booking.Seats - bookingToUpdate.Seats
+		bookingToUpdate.Seats = booking.Seats
+		return s.bookingRepo.UpdateSeats(ctx, bookingToUpdate, seatsChange)
 	}
 
-	return booking, nil
+	return bookingToUpdate, nil
 }

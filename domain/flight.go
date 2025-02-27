@@ -4,8 +4,6 @@ import (
 	"time"
 )
 
-const FlightTableName = "flights"
-
 type Flight struct {
 	ID             int64        `json:"id"`
 	Departure      string       `json:"departure" validate:"required"`
@@ -34,15 +32,6 @@ type FlightSummaryResponse struct {
 	DepartureTime time.Time    `json:"departure_time"`
 	Status        FlightStatus `json:"status"`
 }
-
-// overrides the table name
-func (FlightSummaryResponse) TableName() string {
-	return FlightTableName
-}
-
-// func (f FlightSummaryResponse) Value() (driver.Value, error) {
-// 	return f.ID, nil
-// }
 
 type FlightResponse struct {
 	ID            int64        `json:"id"`
