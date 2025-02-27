@@ -21,6 +21,10 @@
 
     The reason for using optimistic locking is to accommodate scenarios with **high read operations and low write operations**. Compared to pessimistic locking, optimistic locking helps prevent database contention and excessive waiting during high-traffic, high-concurrency situations.
 
+### Postman Collection
+
+More details about APIs and parameters, please import the [Collection](go-ticket-booking.postman_collection.json) to Postman.
+
 ### How To Run This Project
 
 > Make Sure you have run the flight.sql in your mysql
